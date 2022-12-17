@@ -1,2 +1,3 @@
-# Example Mod
-This is an example mod for Kotlin.
+# OptiGUI Next
+
+OptiGUI version 2 development project.

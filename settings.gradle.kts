@@ -9,3 +9,5 @@ pluginManagement {
         kotlin("jvm").version(System.getProperty("kotlin_version"))
     }
 }
+
+include("OptiGUI", "OptiGlue:Stub", "OptiGlue:1.19", "OptiGlue:1.19.3")
