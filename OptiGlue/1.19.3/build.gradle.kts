@@ -1,6 +1,7 @@
 plugins {
     id("fabric-loom")
-    kotlin("jvm").version(System.getProperty("kotlin_version"))
+    kotlin("jvm")
+    id("net.kyori.blossom")
 }
 
 base { archivesName.set(project.extra["archives_base_name"] as String) }
@@ -20,6 +21,8 @@ dependencies {
         "fabric-language-kotlin",
         project.extra["fabric_language_kotlin_version"] as String
     )
+
+    implementation(project(":OptiGUI", configuration = "namedElements"))
 }
 
 sourceSets["main"].apply {
@@ -28,12 +31,14 @@ sourceSets["main"].apply {
     resources.setSrcDirs("resources")
 }
 
+blossom.replaceToken("@mod_version@", project.extra["mod_version"])
+
 tasks {
     processResources {
         filesMatching("fabric.mod.json") {
             expand(
                 mutableMapOf(
-                    "version" to version as String,
+                    "version" to project.extra["mod_version"] as String,
                     "fabricloader" to project.extra["loader_version"] as String,
                     "fabric_api" to project.extra["fabric_version"] as String,
                     "fabric_language_kotlin" to project.extra["fabric_language_kotlin_version"] as String,

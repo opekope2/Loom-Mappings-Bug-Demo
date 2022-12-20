@@ -1,6 +1,7 @@
 plugins {
     id("fabric-loom")
-    kotlin("jvm").version(System.getProperty("kotlin_version"))
+    kotlin("jvm")
+    id("net.kyori.blossom")
 }
 
 base { archivesName.set(project.extra["archives_base_name"] as String) }
@@ -21,10 +22,6 @@ dependencies {
         project.extra["fabric_language_kotlin_version"] as String
     )
 
-    // Compile against OptiGlue Stub
-    compileOnly(project(":OptiGlue:Stub"))
-
-    // Provide actual OptiGlue implementation at runtime (Fabric auto-loads it)
     runtimeOnly(project(":OptiGlue:1.19", configuration = "namedElements"))
     include(project(":OptiGlue:1.19", configuration = "namedElements"))
 
@@ -37,6 +34,8 @@ sourceSets["main"].apply {
     kotlin.setSrcDirs("kotlin")
     resources.setSrcDirs("resources")
 }
+
+blossom.replaceToken("@mod_version@", project.extra["mod_version"])
 
 tasks {
     val javaVersion = JavaVersion.toVersion((project.extra["java_version"] as String).toInt())
@@ -52,7 +51,7 @@ tasks {
         filesMatching("fabric.mod.json") {
             expand(
                 mutableMapOf(
-                    "version" to version as String,
+                    "version" to project.extra["mod_version"] as String,
                     "fabricloader" to project.extra["loader_version"] as String,
                     "fabric_api" to project.extra["fabric_version"] as String,
                     "fabric_language_kotlin" to project.extra["fabric_language_kotlin_version"] as String,
