@@ -47,6 +47,7 @@ tasks {
                 )
             )
         }
+        filesMatching("*.mixins.json") { expand(mutableMapOf("java" to project.extra["java_version"] as String)) }
     }
 }
 
