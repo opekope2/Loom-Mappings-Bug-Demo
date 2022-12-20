@@ -23,9 +23,6 @@
       }
     ]
   },
-  "mixins": [
-    "optigui.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${fabricloader}",
     "fabric-api": ">=${fabric_api}",
